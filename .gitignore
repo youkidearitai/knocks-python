@@ -1,0 +1,5 @@
+env/
+*.txt
+*.gz
+.DS_Store
+*.pyc
