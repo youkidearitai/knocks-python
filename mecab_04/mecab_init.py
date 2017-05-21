@@ -4,7 +4,7 @@
 import MeCab
 
 def init():
-    tagger = MeCab.Tagger("-Ochasen")
+    tagger = MeCab.Tagger()
     with open("neko.txt") as fp:
         with open("neko.txt.mecab", "w") as mfp:
             mfp.write(tagger.parse(fp.read()))
