@@ -5,7 +5,7 @@ import mecab_04.mecab_init
 
 mapping = mecab_04.mecab_init.mapping()
 
-for index in range(2, len(mapping) - 2):
+for index in range(1, len(mapping) - 1):
     if mapping[index]['surface'] == 'の' and \
             mapping[index - 1]['pos'] == '名詞' and \
             mapping[index + 1]['pos'] == '名詞':
