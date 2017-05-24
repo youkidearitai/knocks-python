@@ -1,24 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-mapping = []
-with open('neko.txt.mecab') as fp:
-    for line in fp:
-        if line == 'EOS\n':
-            break
+import mecab_04.mecab_init
 
-        facts = line.split("\t")
-        surface = facts[0]
-
-        names = facts[1].split(",")
-
-        mapping.append({
-            'surface': surface,
-            'base':    names[-2],
-            'pos':     names[0],
-            'pos1':    names[1]
-        })
-
+mapping = mecab_04.mecab_init.mapping()
 
 print(mapping)
 
