@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # -*-coding: utf-8 -*-
 
-from itertools import groupby
+import collections
 import mecab_04.mecab_init
 
 mapping = mecab_04.mecab_init.mapping()
 
-words = [word['surface'] for word in mapping]
-words.sort()
+counter = collections.Counter([word['surface'] for word in mapping])
 
-word_counts = sorted([[word, len(list(g))] for word, g in groupby(words)], reverse=True)
-word_counts.sort(key=lambda data: data[1], reverse=True)
-print(word_counts)
-
+for (key, value) in counter.most_common():
+    print("{0}: {1}".format(key, value))
