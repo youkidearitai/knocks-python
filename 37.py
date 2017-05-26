@@ -12,8 +12,7 @@ matplotlib.rcParams['font.family'] = 'AppleGothic'
 mapping = mecab_04.mecab_init.mapping()
 counter = mecab_04.mecab_init.count(mapping)
 
-labels = [key for key, value in counter.most_common(10)]
-values = [value for key, value in counter.most_common(10)]
+labels, values = zip(*counter.most_common(10))
 
 plt.bar(
     list(range(0, 10)),
