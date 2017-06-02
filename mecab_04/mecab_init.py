@@ -2,6 +2,7 @@
 # -*-coding: utf-8 -*-
 
 import MeCab
+import collections
 
 def init():
     tagger = MeCab.Tagger()
@@ -28,6 +29,9 @@ def mapping():
                 'pos1':    names[1]
                 })
         return mapping
+
+def count(mapping):
+    return collections.Counter([word['surface'] for word in mapping])
 
 if __name__ == '__main__':
     init()
