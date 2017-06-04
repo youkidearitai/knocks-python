@@ -4,7 +4,7 @@
 import cabocha_05.cabocha_init
 
 if __name__ == '__main__':
-    for morph in cabocha_05.cabocha_init.cabocha_file_open()[2]:
+    for morph in cabocha_05.cabocha_init.cabocha_file_open()[2].morphs:
         print(
             "surface: {0} base: {1} pos: {2} pos1: {3}".format(
                 morph.surface,
