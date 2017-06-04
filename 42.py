@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import cabocha_05.cabocha_init
