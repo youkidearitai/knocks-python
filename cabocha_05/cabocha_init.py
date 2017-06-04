@@ -26,6 +26,9 @@ class Morph(object):
         self.pos = pos
         self.pos1 = pos1
 
+    def is_symbol(self):
+        return self.pos == "記号"
+
 class Chunk(object):
     """
     文節を表すクラス
