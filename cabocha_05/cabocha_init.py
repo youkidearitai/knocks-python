@@ -82,5 +82,31 @@ def cabocha_file_open():
 
     return morph_lists
 
+def destination(morph, morphs):
+    """
+    係り先の文節リストを返す
+
+    - morph: 係り元文節クラス
+    - morphs: 係り先形態素のリスト
+    """
+    dest = morphs[morph.dst - 1]
+    for d in dest.morphs:
+        if d.pos == '動詞':
+            return morphs[morph.dst - 1]
+
+    return None
+
+def print_surface(dest):
+    """
+    名詞を含む文節が、動詞を含む文節を出力
+
+    - dest 係り受け先のリスト
+    """
+    if dest is None:
+        return
+
+    print("\t".join([morph.surface for morph in dest.morphs if not morph.is_symbol()]))
+
+
 if __name__ == '__main__':
     init()
