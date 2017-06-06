@@ -29,6 +29,7 @@ class Morph(object):
     def is_symbol(self):
         return self.pos == "記号"
 
+
 class Chunk(object):
     """
     文節を表すクラス
@@ -41,6 +42,17 @@ class Chunk(object):
         self.morphs = morphs
         self.dst = dst
         self.srcs = srcs
+
+    def is_has_verb(self):
+        """
+        動詞があるかないか調べる
+        """
+        for morph in self.morphs:
+            if morph.pos == '動詞':
+                return True
+
+        return False
+
 
 def cabocha_file_open():
     description = re.compile("\* [0-9]+ \-?[0-9]+D [0-9]+\/[0-9]+ \-?[0-9]+(\.[0-9]+)?")
@@ -91,7 +103,7 @@ def destination(morph, morphs):
     """
     dest = morphs[morph.dst - 1]
     for d in dest.morphs:
-        if d.pos == '動詞':
+        if d.has_verb():
             return morphs[morph.dst - 1]
 
     return None
