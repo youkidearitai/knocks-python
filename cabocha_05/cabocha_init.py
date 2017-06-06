@@ -29,6 +29,9 @@ class Morph(object):
     def is_symbol(self):
         return self.pos == "記号"
 
+    def is_noun(self):
+        return self.pos == "名詞"
+
 
 class Chunk(object):
     """
@@ -102,9 +105,8 @@ def destination(morph, morphs):
     - morphs: 係り先形態素のリスト
     """
     dest = morphs[morph.dst - 1]
-    for d in dest.morphs:
-        if d.has_verb():
-            return morphs[morph.dst - 1]
+    if dest.is_has_verb():
+        return dest
 
     return None
 
