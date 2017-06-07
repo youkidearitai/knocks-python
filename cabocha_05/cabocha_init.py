@@ -56,6 +56,13 @@ class Chunk(object):
 
         return False
 
+    def is_has_noun(self):
+        for morph in self.morphs:
+            if morph.pos == '名詞':
+                return True
+
+        return False
+
 
 def cabocha_file_open():
     description = re.compile("\* [0-9]+ \-?[0-9]+D [0-9]+\/[0-9]+ \-?[0-9]+(\.[0-9]+)?")
@@ -104,6 +111,9 @@ def destination(morph, morphs):
     - morph: 係り元文節クラス
     - morphs: 係り先形態素のリスト
     """
+    if not morph.is_has_noun():
+        return None
+
     dest = morphs[morph.dst - 1]
     if dest.is_has_verb():
         return dest
