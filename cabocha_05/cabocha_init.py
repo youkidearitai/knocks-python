@@ -120,16 +120,16 @@ def destination(morph, morphs):
     - morph: 係り元文節クラス
     - morphs: 係り先形態素のリスト
     """
-    if not morph.is_has_noun():
+    if morph.dst == -1:
         return None
 
-    dest = morphs[morph.dst - 1]
-    if dest.is_has_verb():
-        return dest
+    #if not morph.is_has_noun():
+    #    return None
 
-    return None
+    dest = morphs[morph.dst]
+    return dest
 
-def print_surface(dest):
+def print_surface(morph, dest):
     """
     名詞を含む文節が、動詞を含む文節を出力
 
@@ -138,8 +138,20 @@ def print_surface(dest):
     if dest is None:
         return
 
-    print("\t".join([morph.surface for morph in dest.morphs if not morph.is_symbol()]))
+    morph_str = "".join([morph.surface for morph in morph.morphs if not morph.is_symbol()])
+    dest_str = "".join([morph.surface for morph in dest.morphs if not morph.is_symbol()])
 
+    print("{0}\t{1}".format(morph_str, dest_str))
+
+def merge_chunks(morph):
+    """
+    形態素のリストのsurfaceをリストにして返す
+
+    - morph: 形態素のリスト
+    """
+    return "".join(
+        [morph.surface for morph in morph.morphs if not morph.is_symbol()]
+    )
 
 if __name__ == '__main__':
     init()
