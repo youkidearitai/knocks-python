@@ -46,6 +46,14 @@ class Chunk(object):
         self.dst = dst
         self.srcs = srcs
 
+    def append_morph(self, morph):
+        """
+        形態素のリストをappendする
+
+        - morph: 係り元形態素のリスト
+        """
+        self.morphs.append(morph)
+
     def is_has_verb(self):
         """
         動詞があるかないか調べる
@@ -67,11 +75,10 @@ class Chunk(object):
 def cabocha_file_open():
     description = re.compile("\* [0-9]+ \-?[0-9]+D [0-9]+\/[0-9]+ \-?[0-9]+(\.[0-9]+)?")
     morph_lists = []
-    tmp = []
+
+    tmp_chunk = None
 
     with open("neko.txt.cabocha") as fp:
-        fp.readline()
-
         for line in fp:
             line = line.rstrip()
             if line == "EOS":
@@ -79,18 +86,19 @@ def cabocha_file_open():
 
             if description.search(line) is not None:
                 lists = line.split()
-                morph_lists.append(
-                    Chunk(
-                        tmp,
-                        int(lists[2].rstrip("D")),
-                        int(lists[1])
-                    )
+
+                if tmp_chunk is not None:
+                    morph_lists.append(tmp_chunk)
+
+                tmp_chunk = Chunk(
+                    [],
+                    int(lists[2].rstrip("D")),
+                    int(lists[1])
                 )
-                tmp = []
             else:
                 lists = re.split("[\t,]", line)
                 try:
-                    tmp.append(
+                    tmp_chunk.append_morph(
                         Morph(
                             lists[0],
                             lists[7],
@@ -99,7 +107,6 @@ def cabocha_file_open():
                         )
                     )
                 except IndexError as indexerror:
-                    print(line)
                     raise indexerror
 
     return morph_lists
