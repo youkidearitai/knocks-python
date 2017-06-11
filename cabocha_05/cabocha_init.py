@@ -73,6 +73,7 @@ class Chunk(object):
 
 
 def cabocha_file_open():
+    # * 80630 -1D 0/0 0.000000
     description = re.compile("\* [0-9]+ \-?[0-9]+D [0-9]+\/[0-9]+ \-?[0-9]+(\.[0-9]+)?")
     morph_lists = []
 
@@ -97,6 +98,7 @@ def cabocha_file_open():
                 )
             else:
                 lists = re.split("[\t,]", line)
+
                 try:
                     tmp_chunk.append_morph(
                         Morph(
