@@ -94,8 +94,9 @@ def cabocha_file_open():
                 tmp_chunk = Chunk(
                     [],
                     int(lists[2].rstrip("D")),
-                    int(lists[1])
+                    []
                 )
+
             else:
                 lists = re.split("[\t,]", line)
 
@@ -110,6 +111,13 @@ def cabocha_file_open():
                     )
                 except IndexError as indexerror:
                     raise indexerror
+
+    for index in range(0, len(morph_lists)):
+        try:
+            morph_lists[morph_lists[index].dst].srcs.append(index)
+        except IndexError as indexError:
+            print(index)
+            print(indexError)
 
     return morph_lists
 
