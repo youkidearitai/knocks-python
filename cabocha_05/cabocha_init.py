@@ -46,6 +46,14 @@ class Chunk(object):
         self.dst = dst
         self.srcs = srcs
 
+    def append_srcs(self, src):
+        """
+        係り元のインデックス番号をappendする
+
+        - src: 係り元形態素
+        """
+        self.srcs.append(src)
+
     def append_morph(self, morph):
         """
         形態素のリストをappendする
@@ -114,9 +122,8 @@ def cabocha_file_open():
 
     for index in range(0, len(morph_lists)):
         try:
-            morph_lists[morph_lists[index].dst].srcs.append(index)
+            morph_lists[morph_lists[index].dst].append_srcs(index)
         except IndexError as indexError:
-            print(index)
             print(indexError)
 
     return morph_lists
@@ -160,6 +167,28 @@ def merge_chunks(morph):
     return "".join(
         [morph.surface for morph in morph.morphs if not morph.is_symbol()]
     )
+
+
+def verb_chunks(morph, morphs):
+    """
+    動詞(述語)と係り先の助詞(格)のリストを返す
+    """
+    dest = destination(morph, morphs)
+    if dest is None:
+        return []
+
+    if not morph.is_has_verb():
+        return []
+
+    verb = None
+    for src_morph in morph.morphs:
+        if src_morph.pos == '動詞':
+            verb = src_morph.base
+
+    post = " ".join([dest_morph.surface for dest_morph in dest.morphs if dest_morph.pos == '助詞'])
+
+    return "{0}\t{1}".format(verb, post)
+
 
 if __name__ == '__main__':
     init()
