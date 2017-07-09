@@ -79,6 +79,13 @@ class Chunk(object):
 
         return False
 
+    def is_has_noun_and_verb(self):
+        for index, morph in enumerate(self.morphs[0:-1]):
+            if morph.pos == '名詞' and morph.pos1 == 'サ変接続' \
+                    and self.morphs[index + 1].pos == '助詞':
+                        return True
+        return False
+
 
 def cabocha_file_open():
     # * 80630 -1D 0/0 0.000000
@@ -189,6 +196,14 @@ def verb_chunks(morph, morphs):
 
     return "{0}\t{1}".format(verb, post)
 
+def srcs(srcs, morphs):
+    ret = []
+
+    for src in srcs:
+        for morph in morphs[morphs[src].dst].morphs:
+            ret.append(morph)
+
+    return ret
 
 if __name__ == '__main__':
     init()
